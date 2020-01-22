@@ -4,9 +4,9 @@ const jwt = require('jsonwebtoken');
 const keys = require('../config/keys');
 
 const Auth = { 
-    signIn: (email, password) => {
+    signIn: (emailOrUsername, password) => {
         return new Promise( (resolve, reject) => {
-            UserController.getUser(email).then(result => {
+            UserController.getUser(emailOrUsername).then(result => {
                 let user = result;
                 if(result && result.dataValues) {
                     user = result.dataValues;
@@ -34,7 +34,7 @@ const Auth = {
                 if(result && result.dataValues) {
                     user = result.dataValues;
                 }
-                if(user && email === user.email) {
+                if(user) {
                     reject(new Error('The user is already registered'));
                 } else {
                     UserController.addUser(username, email, password).then(result => {

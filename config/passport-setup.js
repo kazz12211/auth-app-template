@@ -1,6 +1,7 @@
 const passport = require('passport');
 const GitHubStrategy = require('passport-github');
 const GoogleStrategy = require('passport-google-oauth20');
+const TwitterStrategy = require('passport-twitter');
 const keys = require('../config/keys');
 const UserController = require('../controller/user-controller');
 const DB = require('../config/config').db;
@@ -83,3 +84,35 @@ passport.use(
         });
     })
 );
+
+passport.use(new TwitterStrategy(
+    {
+        consumerKey: keys.twitter.clientID,
+        consumerSecret: keys.twitter.clientSecret,
+        callbackURL: '/auth/twitter/redirect'
+    },
+    (token, tokenSecret, profile, callback) => {
+        const twitterId = profile.id;
+        const username = profile.username;
+        
+        UserController.getUser(username).then(result => {
+            let user = result;
+            if(result && result.dataValues) {
+                user = result.dataValues;
+            }
+            if(user) {
+                if(user.twitterId) {
+                    return callback(null, user);
+                } else {
+                    UserController.updateTwitterUser(user._id ? user._id : user.id, twitterId).then(result => {
+                        return callback(null, result.dataValues ? result.dataValues : result);
+                    });
+                }
+            } else {
+                UserController.addTwitterUser(username, twitterId).then(result => {
+                    return callback(null, result.dataValues ? result.dataValues : result);
+                });
+            }
+        });
+    }
+));

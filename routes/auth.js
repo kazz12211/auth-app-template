@@ -73,9 +73,21 @@ router.get('/google/redirect', passport.authenticate('google', {
     });
 });
 
-router.get('/twitter', (req, res) => {
-    res.redirect('/auth/signin');
-});
+router.get('/twitter', passport.authenticate('twitter'));
+
+router.get('/twitter/redirect', passport.authenticate('twitter', {
+    failureRedirect: '/auth/signin'
+}), (req, res) => {
+    Auth.gotProfile(req.user).then(result => {
+        req.session.token = result.token;
+        req.session.save( (err) => {
+            setTimeout(() => res.redirect('/'), 500);
+        });
+    }).catch(err => {
+        console.log(err);
+        res.redirect('/auth/signin');
+    });
+})
 
 router.get('/facebook', (req, res) => {
     res.redirect('/auth/signin');

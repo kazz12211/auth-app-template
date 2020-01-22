@@ -10,7 +10,7 @@ const UserSchema = new mongoose.Schema(
         },
         email: {
             type: String,
-            require: true,
+            require: false,
             trim: true
         },
         password: {
@@ -27,6 +27,11 @@ const UserSchema = new mongoose.Schema(
             type: String,
             require: false,
             trime: true
+        },
+        twitterId: {
+            type: String,
+            required: false,
+            trim: true
         }
     }
 );
