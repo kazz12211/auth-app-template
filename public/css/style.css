@@ -1,0 +1,28 @@
+.signin-form {
+    max-width: 320px;
+    width: 320px;
+    padding: 1rem;
+    margin: auto
+}
+
+.social {
+    width: 320px;
+    padding: 1rem;
+    margin: auto;
+}
+
+.social-icons {
+    display: flex;
+    flex-direction: row;
+}
+
+.social-icons a {
+    font-size: 48px;
+    text-decoration: none;
+    color: black;
+    margin: 0 8px 0 8px;
+}
+
+.social-icons a:visited {
+    color: black;
+}

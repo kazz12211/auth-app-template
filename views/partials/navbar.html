@@ -1,0 +1,24 @@
+<nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
+    <a class="navbar-brand" href="/">Auth App</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+        aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/public">Public Area</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/protected">Protected Area</a>
+            </li>
+            <li class="nav-item">
+                {% if token %}
+                <a class="nav-link" href="/auth/signout">Sign Out</a>
+                {% else %}
+                <a class="nav-link" href="/auth/signin">Sign In</a>
+                {% endif %}
+            </li>
+        </ul>
+    </div>
+</nav>

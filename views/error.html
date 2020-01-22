@@ -1,0 +1,16 @@
+{% extends "layouts/layout.html" %}
+
+{% block content %}
+{% include "partials/navbar.html" with {token: token} %}
+<main role="main">
+    <div class="container">
+        <h1>Error!</h1>
+
+        {% if error %}
+        <div class="alert alert-warning" role="alert">
+            <strong>{{ error.message }}</strong>
+        </div>
+        {% endif %}
+    </div>
+</main>
+{% endblock %}
