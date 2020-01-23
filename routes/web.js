@@ -2,7 +2,8 @@ const express = require('express');
 const router = express.Router();
 const authguard = require('../security/authguard').authguard;
 const getUserId = require('../security/authguard').getUserId;
-const UserController = require('../controller/user-controller');
+const DB = require('../config/config').db;
+const UserController = DB === 'mongo' ? require('../controller/user-controller-mongo') : require('../controller/user-controller-postgres');
 
 router.get('/', (req, res) => {
     res.render('index.html', { token: req.session.token });

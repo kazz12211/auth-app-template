@@ -3,15 +3,18 @@ const GitHubStrategy = require('passport-github');
 const GoogleStrategy = require('passport-google-oauth20');
 const TwitterStrategy = require('passport-twitter');
 const keys = require('../config/keys');
-const UserController = require('../controller/user-controller');
 const DB = require('../config/config').db;
+const UserController = DB === 'mongo' ? require('../controller/user-controller-mongo') : require('../controller/user-controller-postgres');
 
-passport.serializeUser( (user, done) => {
+function getUserId(user) {
     if(DB === 'mongo') {
-        done(null, user._id);
+        return user._id;
     } else {
-        done(null, user.id);
+        return user.id;
     }
+}
+passport.serializeUser( (user, done) => {
+    done(null, getUserId(user));
 });
 
 passport.deserializeUser( (id, done) => {
@@ -40,7 +43,7 @@ passport.use(
                 if(user.googleId) {
                     return callback(null, user);
                 } else {
-                    UserController.updateGoogleUser(user._id ? user._id : user.id, googleId).then(result => {
+                    UserController.updateGoogleUser(getUserId(user), googleId).then(result => {
                         return callback(null, result.dataValues ? result.dataValues : result);
                     });
                 }
@@ -72,7 +75,7 @@ passport.use(
                 if(user.githubId) {
                     return callback(null, user);
                 } else {
-                    UserController.updateGithubUser(user._id ? user._id : user.id, githubId).then(result => {
+                    UserController.updateGithubUser(getUserId(user), githubId).then(result => {
                         return callback(null, result.dataValues ? result.dataValues : result);
                     });
                 }
@@ -104,7 +107,7 @@ passport.use(new TwitterStrategy(
                 if(user.twitterId) {
                     return callback(null, user);
                 } else {
-                    UserController.updateTwitterUser(user._id ? user._id : user.id, twitterId).then(result => {
+                    UserController.updateTwitterUser(getUserId(user), twitterId).then(result => {
                         return callback(null, result.dataValues ? result.dataValues : result);
                     });
                 }

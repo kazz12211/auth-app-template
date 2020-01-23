@@ -1,4 +1,5 @@
-const UserController = require('../controller/user-controller');
+const DB = require('../config/config').db;
+const UserController = DB === 'mongo' ? require('../controller/user-controller-mongo') : require('../controller/user-controller-postgres');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const keys = require('../config/keys');
