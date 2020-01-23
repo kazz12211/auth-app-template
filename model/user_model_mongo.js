@@ -18,6 +18,9 @@ const UserSchema = new mongoose.Schema(
             require: true,
             trim: true
         },
+        lastLogin: {
+            type: Date
+        },
         githubId: {
             type: String,
             require: false,

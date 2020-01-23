@@ -19,7 +19,11 @@ const Auth = {
                         subject: userId
                     };
                     const token = jwt.sign(payload, keys.jwt.secretKey);
-                    resolve({token});
+                    UserController.updateLastLogin(user).then( () => {
+                        resolve({token});
+                    }).catch(err => {
+                        reject(err);
+                    });
                 } else {
                     reject(new Error('Invalid username or password'));
                 }
@@ -75,7 +79,11 @@ const Auth = {
                 subject: userId
             };
             const token = jwt.sign(payload, keys.jwt.secretKey);
-            resolve({token});
+            UserController.updateLastLogin(user).then( () => {
+                resolve({token});
+            }).catch(err => {
+                reject(err);
+            });
         });
     }
 };

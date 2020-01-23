@@ -11,6 +11,9 @@ const User = db.define('users', {
     password: {
         type: Sequelize.STRING
     },
+    lastLogin: {
+        type: Sequelize.DATE
+    },
     githubId: {
         type: Sequelize.STRING
     },

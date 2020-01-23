@@ -89,6 +89,22 @@ const UserController = {
 
     getUsers: () => {
         return User.find({}).exec();
+    },
+
+    updateLastLogin: (user) => {
+        return new Promise( (resolve, reject) => {
+            User.findById(user._id).exec().then( user => {
+                user.lastLogin = new Date();
+                user.save().then(saved => {
+                    resolve();
+                }).catch(err => {
+                    reject(err);
+                });
+            }).catch(err => {
+                reject(err);
+            });
+        });
+
     }
 }
 

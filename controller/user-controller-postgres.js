@@ -100,6 +100,21 @@ const UserController = {
                 reject(err);
             });
         });
+    },
+
+    updateLastLogin: (user) => {
+        return new Promise( (resolve, reject) => {
+            User.findByPk(user.id).then(user => {
+                user.lastLogin = new Date();
+                user.save({ fields: ['lastLogin']}).then(saved => {
+                    resolve();
+                }).catch(err => {
+                    reject(err);
+                });
+            }).catch(err => {
+                reject(err);
+            });
+        });
     }
 }
 
