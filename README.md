@@ -7,6 +7,7 @@
 - Password will be crypted by bcrypt when you register user
 - Guard resource pages by Json Web Token stored on session
 - OAuth authentication with GitHub and Google+ (as of 2020/01/22) 
+- Twitter authentication (added on 2020/01/23)
 
 
 To setup this app, add keys.js into config folder.

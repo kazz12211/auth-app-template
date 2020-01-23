@@ -5,6 +5,24 @@
 <main role="main">
     <div class="container">
         <h1>Protected Area</h1>
+        <table class="table table-striped">
+            <tr>
+                <th>Username</th>
+                <th>Email</th>
+                <th>GitHub ID</th>
+                <th>Google ID</th>
+                <th>Twitter ID</th>
+            </tr>
+            {% for user in users %}
+            <tr>
+                <td>{{user.username}}</td>
+                <td>{{user.email}}</td>
+                <td>{{user.githubId}}</td>
+                <td>{{user.googleId}}</td>
+                <td>{{user.twitterId}}</td>
+            </tr>
+            {% endfor %}
+        </table>
     </div>
 </main>
 {% endblock %}

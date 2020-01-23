@@ -5,6 +5,18 @@
 <main role="main">
     <div class="container">
         <h1>Home</h1>
+
+        <p>Authentication Template Application features;</p>
+        <ul>
+            <li>Node.js + Express web server</li>
+            <li>Swig template engine</li>
+            <li>User entity is stored on MongoDB (using mongoose) and PostgreSQL (using Sequelize)</li>
+            <li>Can switch db by config.db property</li>
+            <li>Password will be crypted by bcrypt when you register user</li>
+            <li>Guard resource pages by Json Web Token stored on session</li>
+            <li>OAuth authentication with GitHub and Google+ (as of 2020/01/22) </li>
+            <li>Twitter authentication (added on 2020/01/23)</li>
+        </ul>
     </div>
 </main>
 {% endblock %}

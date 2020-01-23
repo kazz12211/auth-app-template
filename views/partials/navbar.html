@@ -9,9 +9,14 @@
             <li class="nav-item">
                 <a class="nav-link" href="/public">Public Area</a>
             </li>
+            {% if token %}
             <li class="nav-item">
                 <a class="nav-link" href="/protected">Protected Area</a>
             </li>
+            <li>
+                <a class="nav-link" href="/profile">Profile</a>
+            </li>
+            {% endif %}
             <li class="nav-item">
                 {% if token %}
                 <a class="nav-link" href="/auth/signout">Sign Out</a>

@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs');
 const { Op } = require('sequelize');
 
 const UserController = {
+
     getUser: (emailOrUsername) => {
         if (DB === 'mongo') {
             const User = require('../model/user_model_mongo');
@@ -29,6 +30,7 @@ const UserController = {
             return User.findByPk(id);
         }
     },
+
     addUser: (username, email, password) => {
         const salt = bcrypt.genSaltSync(10);
 
@@ -49,6 +51,7 @@ const UserController = {
             });
         }
     },
+
     addGithubUser: (username, email, githubId) => {
         if (DB === 'mongo') {
             const User = require('../model/user_model_mongo');
@@ -67,6 +70,7 @@ const UserController = {
             });
         }
     },
+
     updateGithubUser: (id, githubId) => {
         return new Promise((resolve, reject) => {
             if (DB === 'mongo') {
@@ -92,6 +96,7 @@ const UserController = {
             }
         });
     },
+
     addGoogleUser: (username, email, googleId) => {
         if (DB === 'mongo') {
             const User = require('../model/user_model_mongo');
@@ -110,6 +115,7 @@ const UserController = {
             });
         }
     },
+
     updateGoogleUser: (id, googleId) => {
         return new Promise((resolve, reject) => {
             if (DB === 'mongo') {
@@ -135,6 +141,7 @@ const UserController = {
             }
         });
     },
+
     addTwitterUser: (username, twitterId) => {
         if (DB === 'mongo') {
             const User = require('../model/user_model_mongo');
@@ -151,6 +158,7 @@ const UserController = {
             });
         }
     },
+
     updateTwitterUser: (id, twitterId) => {
         return new Promise((resolve, reject) => {
             if (DB === 'mongo') {
@@ -175,8 +183,24 @@ const UserController = {
                 });
             }
         });
-    }
+    },
 
+    getUsers: () => {
+        if(DB === 'mongo') {
+            const User = require('../model/user_model_mongo');
+            return User.find({}).exec();
+        } else {
+            const User = require('../model/user_model_postgres');
+            return new Promise( (resolve, reject) => {
+                User.findAll().then(result => {
+                    const users = result.map(res => res.dataValues);
+                    resolve(users);
+                }).catch(err => {
+                    reject(err);
+                });
+            });
+        }
+    }
 }
 
 module.exports = UserController;

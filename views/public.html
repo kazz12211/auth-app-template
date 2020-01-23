@@ -5,6 +5,11 @@
 <main role="main">
     <div class="container">
         <h1>Public Area</h1>
+        {% if user %}
+        <p>Welcome, {{user.username}}</p>
+        {% else %}
+        <p>You are not logged in.</p>
+        {% endif %}
     </div>
 </main>
 {% endblock %}
